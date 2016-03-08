@@ -294,6 +294,8 @@ transform(name:string, args) {
 And you should not be able to use the pipe as below:
 
 1. {% raw %}`{{name | Greet}}`{% endraw %} will produce `Hello Suman`
+2. {% raw %}`{{name | Greet:"en"}}`{% endraw %} will produce `Hello Suman`
+3. {% raw %}`{{name | Greet:"fr"}}`{% endraw %} will produce `Bonjour Suman`
 
 
 One things to notice is that `args` is an Array. This is to facilitate passing of multiple parameters from where pipe is used.
