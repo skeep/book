@@ -294,8 +294,6 @@ transform(name:string, args) {
 And you should not be able to use the pipe as below:
 
 1. `{{name | Greet}}` will produce `Hello Suman`
-2. `{{name | Greet:"en"}}` will produce `Hello Suman`
-3. `{{name | Greet:"fr"}}` will produce `Bonjour Suman`
 
 One things to notice is that `args` is an Array. This is to facilitate passing of multiple parameters from where pipe is used.
 
