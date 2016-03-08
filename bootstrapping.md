@@ -1,13 +1,10 @@
 # Building our first Application using Angular2
 
-In this chapter we will learn how to build a simple Angular2 app using typeScript, that shows `Hello World` in a webpage .
+In this chapter we will learn how to build a simple Angular2 app using typeScript, that shows `Hello World` in a webpage . Before we start, please (install)[https://nodejs.org/en/download/] node & npm if not already installed on your machine.
 
 ## webpack
 
 webpack is a module bundler. We will use webpack to load and complie our typeScript files, split code base into chunks. And use webpack-dev-server to serve the static assets from our local server. 
-
-## Directory structure
-
 
 ##Files
 
@@ -86,4 +83,120 @@ module.exports = {
     }
 };
 ```
-Let's discuss this `config` file in details .`entry` denotes starting point for `webpack`. It will compile your files and create bundled file. Here we have two entry points, namely `main` and `shims`. `output` defines where these compiled files will be placed. `webpack` will load `./app/main.ts`, compile, bundle and them place it at `./dist/main.js` (In output filename `[name].js` is a place holder that gets substituted by entry point key ). `es6-shim.js` and `angular2-polyfills.js` files will be bundled together (more about these files later) and placed at `./dist/shims.js`.
+Let's discuss this `config` file in details .
+
+* `entry` denotes starting point for `webpack`. It will compile your files and create bundled file. Here we have two entry points, namely `main` and `shims`. 
+
+* `output` defines where these compiled files will be placed. `webpack` will load `./app/main.ts`, compile, bundle and them place it at `./dist/main.js` (In output filename `[name].js` is a place holder that gets substituted by entry point key ). `es6-shim.js` and `angular2-polyfills.js` files will be bundled together (more about these files later) and placed at `./dist/shims.js`.
+
+* `resolve.extensions` contains an array of extensions to discover files and resolve modules.
+
+* Here we are not using `tsc` (typeScript compiler) directly to compile our typeScript files to `.js` files. We are using `webpack` module loader instead. `test` is the regex to match the filenames (all files ending with `.ts`) and loader is `webpack`'s `ts-loader` module. `ts-loader` takes care of loading and compiling typeScript files to `.js` files.
+
+Next , we need package.json
+
+```javaScript
+//package.json
+{
+  "name": "Angular2-starter-kit",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "webpack && webpack-dev-server --inline --progress --port 9876",
+    "postinstall": "typings install"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "angular2": "2.0.0-beta.7",
+    "es6-promise": "^3.0.2",
+    "es6-shim": "^0.33.3",
+    "rxjs": "5.0.0-beta.2",
+    "zone.js": "0.5.15"
+  },
+  "devDependencies": {
+    "ts-loader": "^0.8.1",
+    "typescript": "^1.8.2",
+    "typings": "^0.6.8",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
+```
+`dependencies` are the plugins that your application will be dependent on runtime. And `devDependencies` are the plugins that you need while development. So as of now, to run an angular2 app we need all the modules mentioned in `dependencies` apart from `angular2` module itself.
+
+In `devDependencies`, we need `webpack` as module bundler. We also need `webpack-dev-server` to run our local server that will serve static files. 
+
+Many JavaScript libraries extend the JavaScript environment with features and syntax that the TypeScript compiler doesn't recognize natively. We teach it about these capabilities with TypeScript type definition files — d.ts files — which we identify in a typings.json file.
+
+```javaScript
+//typings.json
+{
+  "ambientDependencies": {
+    "es6-shim": "github:DefinitelyTyped/DefinitelyTyped/es6-shim/es6-shim.d.ts#6697d6f7dadbf5773cb40ecda35a76027e0783b2"
+  }
+}
+```
+tsconfig.json
+
+We typically add a TypeScript configuration file (tsconfig.json) to our project to guide the compiler as it generates JavaScript files.
+
+```javaScript
+//tsconfig.json
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false
+  },
+  "exclude": [
+    "node_modules",
+    "typings/main",
+    "typings/main.d.ts"
+  ]
+}
+```
+
+We are almost done , only two more steps remaining.
+
+* we will go inside the project root folder and run `npm install` . Node will create a `node_modules` folder in project root and fetch all the required modules specified in `package.json` (including dev dependencies) for us.
+
+* We have also specified a `postinstall` script in `package.json`. Which automatically runs command `typings install` after node is done with `npm install` and creates a folder `typings` in our project root. If we expand `typings` folder, we will see all the ambient dependencies for angular2 is place there.
+
+
+
+## Directory structure
+
+```
+root
+|- app
+|- dist
+|- sub1b
+|  - sub2
+|  - sub3
+|
+|
+|
+```
+###### Final step is to run `npm run start` . It will execute the `start` script defined in `package.json`. 
+
+* It will first execute command `webpack`, which bundles our assets as defined by `webpack.config.js`
+
+* Followed by `webpack-dev-server --inline --progress --port 9876` which starts a webpack dev server locally at port `9876`.
+
+Now if we open the browser and hit `http://localhost:9876` , we should be able to see our page that says `Hello World`.
+
+
+
+
+
+
+
+
+
+  
+
+
