@@ -46,6 +46,45 @@ The `data.service.ts` file is simple enough. It's just a class with a method `ge
 Now for `app.component.ts` it's mostly just a component definition except one decorator key `providers` and constructor parameters.
 But what we just experienced is one of the most powerful feature of Angular namely dependency injection.
 
+Before we understand Angular DI system in detail in the later part of the chapter we will understand a bare minimum so that we can understand what's happening in the above code.
+
+Interestingly the above code is a shorthand and encapsulates quite a lot of implementation details. It will be good if we rewrite the code with little more verbosity it will easier to understand what is going on under the hood.
+
+```javascript
+import {DataService} from "./data.service";
+import {Component, OnInit, Injector, Provider} from "angular2/core";
+
+@Component({
+  selector: 'my-app',
+  template: ''
+})
+
+export class ApiVerboseComponent implements OnInit {
+
+  _dataService;
+
+  constructor() {
+
+    var injector = Injector.resolveAndCreate([
+      new Provider(DataService, {useClass: DataService})
+    ]);
+
+    this._dataService = injector.get(DataService);
+  }
+
+  ngOnInit() {
+    console.log(this._dataService.get())
+  }
+}
+```
+
+The above is is verbose and intimidating to look at, but it clearly explains what exactly happens in Angular 2 DI framework.
+
+1. `Injector` is a dependency injection container used for instantiating objects and resolving dependencies. It is a replacement for a new operator, which can automatically resolve the constructor dependencies.
+
+2. `Provider` describes how the Injector should instantiate a given token. There quite few ways a token can be instantiated, but for now we will focus only on `useClass`
+
+3. `useClass` binds a DI token to an implementation class. Important point to note here is in this case a separate instance of the `class` is returned.
 
 ## Dependency injection as design pattern
 
