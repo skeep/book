@@ -4,8 +4,6 @@
 
 [OASIS - Reference Model for Service Oriented Architecture 1.0](https://docs.oasis-open.org/soa-rm/v1.0/soa-rm.html)
 
-In angular services are Singleton. Which essentially mean it have one and only one instance and it can be accessed globally across the application. Services are also lazily instantiated, only when a component depends on it.
-
 Services are best suitable for some of the following purpose:
 * State management
 * Centralized management of internal and external resources
@@ -48,3 +46,18 @@ The `data.service.ts` file is simple enough. It's just a class with a method `ge
 
 Now for `app.component.ts` it's mostly just a component definition except one decorator key `providers` and constructor parameters.
 But what we just experienced is one of the most powerful feature of Angular namely dependency injection.
+
+
+## Dependency injection as design pattern
+
+> In software engineering, dependency injection is a software design pattern that implements inversion of control for resolving dependencies. A dependency is an object that can be used (a service). An injection is the passing of a dependency to a dependent object (a client) that would use it.
+
+[Dependency injection - Wikipedia](https://en.wikipedia.org/wiki/Dependency_injection)
+
+## Dependency injection as framework
+
+## Multi-dependency Injection
+
+## Injector Relationship
+
+## Dependency Visibility
