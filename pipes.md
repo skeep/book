@@ -191,7 +191,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     fetch('https://api.github.com/orgs/github')
       .then((res) => {
-        ~~ why not this ? ~~
         this.message = res.json();
       })
       .catch((ex) => {
@@ -294,7 +293,7 @@ transform(name:string, args) {
 
 And you should not be able to use the pipe as below:
 
-~~ Syntax looks like wrong. It should b {{'Suman' | Greet}} . + More generic names please ~~   
+
 1. `{{name | Greet}}` will produce `Hello Suman`
 2. `{{name | Greet:"en"}}` will produce `Hello Suman`
 3. `{{name | Greet:"fr"}}` will produce `Bonjour Suman`
