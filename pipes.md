@@ -293,7 +293,7 @@ transform(name:string, args) {
 
 And you should not be able to use the pipe as below:
 
-1. ```{{name | greet}}``` will produce `Hello Suman`
+1. ```{{name}}``` will produce `Hello Suman`
 
 One things to notice is that `args` is an Array. This is to facilitate passing of multiple parameters from where pipe is used.
 
