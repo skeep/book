@@ -41,7 +41,6 @@ export class ApiComponent {
     console.log(_dataService.get())
   }
 }
-
 ```
 
 The `data.service.ts` file is simple enough. It's just a class with a method `get()` in it, which returns the text `Hello!!!`.
